@@ -1,7 +1,8 @@
 import Lean
 open Lean Elab Term
 
-def hello := "world"
+def こんにちは := "world"
+def say (a : String) := a.capitalize
 
 def getCtors (typ : Name) : MetaM (List Name) := do
   let env ← getEnv
@@ -28,5 +29,20 @@ def myanonImpl : TermElab := fun stx typ? => do
   elabTerm stx typ -- call term elaboration recursively
 
 
-#check (⟨⟨1 sorry⟩⟩ : Fin 12)
-def oo: List Char := ⟨⟨ hello ⟩⟩
+-- #check (⟨⟨1 sorry⟩⟩ : Fin 12)
+-- def oo: List Char := ⟨⟨ hello ⟩⟩
+declare_syntax_cat ja_expr
+syntax "こんにちは" : ja_expr
+syntax "言う" : ja_expr
+syntax "ja(" ja_expr+ ")" : term
+
+#check ja( こんにちは 言う )
+
+declare_syntax_cat boolean_expr
+syntax "⊥" : boolean_expr -- ⊥ for false
+syntax "⊤" : boolean_expr -- ⊤ for true
+syntax:40 boolean_expr " OR " boolean_expr : boolean_expr
+syntax:50 boolean_expr " AND " boolean_expr : boolean_expr
+
+syntax "[Bool|" boolean_expr "]" : term
+#check [Bool| ⊥ AND ⊤] -- elaboration function hasn't been implemented but parsing passes

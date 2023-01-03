@@ -1,7 +1,7 @@
 import Lean
 open Lean Elab Term
 
-def こんにちは := "world"
+-- def こんにちは := "world"
 def say (a : String) := a.capitalize
 
 def getCtors (typ : Name) : MetaM (List Name) := do
@@ -28,15 +28,29 @@ def myanonImpl : TermElab := fun stx typ? => do
   logInfo s!"stx2:{stx}"
   elabTerm stx typ -- call term elaboration recursively
 
-
 -- #check (⟨⟨1 sorry⟩⟩ : Fin 12)
 -- def oo: List Char := ⟨⟨ hello ⟩⟩
+
 declare_syntax_cat ja_expr
 syntax "こんにちは" : ja_expr
 syntax "言う" : ja_expr
-syntax "ja(" ja_expr+ ")" : term
+syntax (name:=ja_expr) "ja(" term+ ")" : term
+-- def こんにちは := "hello"
+-- def 言う (a : String) := a.capitalize
+-- @[termElab ja_expr]
+-- def 
 
-#check ja( こんにちは 言う )
+@[termElab ja_expr]
+def hogeImpl : TermElab := fun stx typ? => do
+  logInfo s!"kk{stx[2]}"
+  match stx with
+  | `(ja_expr | ja( $jexpr )) =>
+    logInfo s!"mm{jexpr}"
+    pure $ mkStrLit "a"
+  | _ => throwUnsupportedSyntax
+
+-- #check ja( こんにちは 言う )
+#check ja( 1 2 )
 
 declare_syntax_cat boolean_expr
 syntax "⊥" : boolean_expr -- ⊥ for false

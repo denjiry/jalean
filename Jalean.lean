@@ -1,7 +1,9 @@
 import Lean
 open Lean Elab Term
 
--- def こんにちは := "world"
+def «こんにちは» := "hello"
+#eval «こんにちは»++«こんにちは»
+
 def say (a : String) := a.capitalize
 
 def getCtors (typ : Name) : MetaM (List Name) := do

@@ -34,23 +34,17 @@ def myanonImpl : TermElab := fun stx typ? => do
 declare_syntax_cat ja_expr
 syntax "こんにちは" : ja_expr
 syntax "言う" : ja_expr
-syntax (name:=ja_expr) "ja(" term+ ")" : term
 -- def こんにちは := "hello"
 -- def 言う (a : String) := a.capitalize
 -- @[termElab ja_expr]
 -- def 
 
-@[termElab ja_expr]
-def hogeImpl : TermElab := fun stx typ? => do
-  logInfo s!"kk{stx[2]}"
-  match stx with
-  | `(ja_expr | ja( $jexpr )) =>
-    logInfo s!"mm{jexpr}"
-    pure $ mkStrLit "a"
-  | _ => throwUnsupportedSyntax
+elab "ja(" je:ja_expr+ ")" : term => do
+  logInfo s!"kk{je.raw}"
+  pure $ mkStrLit "ja"
 
--- #check ja( こんにちは 言う )
-#check ja( 1 2 )
+#check ja( こんにちは )
+#check ja( こんにちは 言う )
 
 declare_syntax_cat boolean_expr
 syntax "⊥" : boolean_expr -- ⊥ for false

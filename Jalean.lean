@@ -42,17 +42,9 @@ syntax "言う" : ja_expr
 -- def 
 
 elab "ja(" je:ja_expr+ ")" : term => do
-  logInfo s!"kk{je.raw}"
-  pure $ mkStrLit "ja"
+  let _a: Syntax := (je[0]!).raw
+  logInfo s!"kk{je[1]!}"
+  pure $ mkStrLit s!"o{je}"
 
-#check ja( こんにちは )
-#check ja( こんにちは 言う )
-
-declare_syntax_cat boolean_expr
-syntax "⊥" : boolean_expr -- ⊥ for false
-syntax "⊤" : boolean_expr -- ⊤ for true
-syntax:40 boolean_expr " OR " boolean_expr : boolean_expr
-syntax:50 boolean_expr " AND " boolean_expr : boolean_expr
-
-syntax "[Bool|" boolean_expr "]" : term
-#check [Bool| ⊥ AND ⊤] -- elaboration function hasn't been implemented but parsing passes
+#eval ja(こんにちは)
+#eval ja(こんにちは言う)

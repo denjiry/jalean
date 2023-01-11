@@ -5,6 +5,14 @@ def «こんにちは» := "hello"
 #eval «こんにちは»++«こんにちは»
 
 def say (a : String) := a.capitalize
+#eval say «こんにちは»
+
+def «太郎が» := 1
+def «次郎を» := 2
+-- i==2 -> S\NP\NP:       \y.\x.\c.(e:event)X(op(e,x,y)X(ce)
+def «ほめる» := 3
+
+#check «太郎が» «次郎を» «ほめる»
 
 def getCtors (typ : Name) : MetaM (List Name) := do
   let env ← getEnv

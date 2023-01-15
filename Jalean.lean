@@ -7,10 +7,11 @@ def «こんにちは» := "hello"
 def say (a : String) := a.capitalize
 #eval say «こんにちは»
 
+def Entity : Type
 def «太郎が» := 1
 def «次郎を» := 2
 -- i==2 -> S\NP\NP:       \y.\x.\c.(e:event)X(op(e,x,y)X(ce)
-def «ほめる» := 3
+def «ほめる» (y x : Entity) : Prop
 
 #check «太郎が» «次郎を» «ほめる»
 

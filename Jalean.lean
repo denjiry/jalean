@@ -7,11 +7,17 @@ def «こんにちは» := "hello"
 def say (a : String) := a.capitalize
 #eval say «こんにちは»
 
-def Entity : Type
+inductive Entity where
+  | entity : Entity
+
 def «太郎が» := 1
 def «次郎を» := 2
 -- i==2 -> S\NP\NP:       \y.\x.\c.(e:event)X(op(e,x,y)X(ce)
-def «ほめる» (y x : Entity) : Prop
+inductive «ほめるsr» (e1 : Entity)(e2 : Entity) : Prop
+  | mk : Entity -> Entity -> «ほめるsr» e1 e2
+#check «ほめるsr».mk Entity.entity Entity.entity
+
+def «ほめる» := 3
 
 #check «太郎が» «次郎を» «ほめる»
 

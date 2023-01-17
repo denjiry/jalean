@@ -16,6 +16,21 @@ def «次郎を» := 2
 inductive «ほめるsr» (e1 : Entity)(e2 : Entity) : Prop
   | mk : Entity -> Entity -> «ほめるsr» e1 e2
 #check «ほめるsr».mk Entity.entity Entity.entity
+inductive «ほめるsr2» : Entity -> Entity -> Prop
+  | hmr (e1 : Entity) (e2 : Entity) : «ほめるsr2» e1 e2
+#check «ほめるsr2».hmr Entity.entity Entity.entity
+def haha := «ほめるsr2» Entity.entity Entity.entity
+
+theorem ee : ∀ e1 e2:Entity, («ほめるsr2» e1 e2) -> («ほめるsr» e1 e2) := by
+  intros e1 e2 h
+  exact «ほめるsr».mk e1 e2
+
+theorem pp : Eq 1 1 := by
+  apply 
+
+structure verb2 where
+  ga : Entity
+  wo : Entity
 
 def «ほめる» := 3
 

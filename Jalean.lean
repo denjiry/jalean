@@ -30,6 +30,10 @@ def hoge2 : Entity := entity
 inductive Entity2 where
   | ent2 (n : Name) : Entity2
 open Entity2
+inductive Entity3 where
+  | ent3 : Name -> Entity3
+open Entity3
+#check Entity3
 def «太郎が» := 1
 def «次郎を» := 2
 #check Eq

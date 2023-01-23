@@ -26,14 +26,18 @@ inductive Entity where
 open Entity
 def hoge : Entity := entity
 def hoge2 : Entity := entity
+example :  hoge = hoge2 := by
+  rfl
 
 inductive Entity2 where
   | ent2 (n : Name) : Entity2
 open Entity2
-inductive Entity3 where
-  | ent3 : Name -> Entity3
-open Entity3
-#check Entity3
+def taro := ent2 `a
+def jiro := ent2 `b
+#check False
+example : taro ≠ jiro := by 
+  admit
+
 def «太郎が» := 1
 def «次郎を» := 2
 #check Eq

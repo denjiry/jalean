@@ -22,18 +22,10 @@ def say (a : String) := a.capitalize
 -- Sig. [太郎/たろう;太郎/たろう:entity, 次郎/じろう:entity, 誉める/ほめる/ガヲ:(x0:entity)→ (x1:entity)→ (e0:evt)→ type]
 
 inductive Entity where
-  | entity : Entity
+  | entity (n : Name) : Entity
 open Entity
-def hoge : Entity := entity
-def hoge2 : Entity := entity
-example :  hoge = hoge2 := by
-  rfl
-
-inductive Entity2 where
-  | ent2 (n : Name) : Entity2
-open Entity2
-def taro := ent2 `a
-def jiro := ent2 `b
+def taro := entity `a
+def jiro := entity `b
 #check False
 example : taro ≠ jiro := by 
   admit
@@ -43,16 +35,15 @@ def «次郎を» := 2
 #check Eq
 #check λy x => And.intro x y
 -- i==2 -> S\NP\NP:       \y.\x.\c.(e:event)X(op(e,x,y)X(ce)
-#check Entity2
+#check Entity
 #check Nat
-inductive «ほめるsr» (e1 e2 : Entity2) : Prop
-  | mk : Entity2 -> Entity2 -> «ほめるsr» e1 e2
-#check «ほめるsr».mk (ent2 `a) (ent2 `b)
+inductive «ほめるsr» (e1 e2 : Entity) : Prop
+  | mk : Entity -> Entity -> «ほめるsr» e1 e2
+#check «ほめるsr».mk (entity `a) (entity `b)
 inductive «ほめるsr2» : Entity -> Entity -> Prop
   | hmr (e1 : Entity) (e2 : Entity) : «ほめるsr2» e1 e2
-#check «ほめるsr2».hmr entity entity
-def haha := «ほめるsr2» entity entity
-
+#check «ほめるsr2».hmr (entity `a) (entity `b)
+def haha := «ほめるsr2» (entity `a) (entity `b)
 example : ∀ e1 e2:Entity, («ほめるsr2» e1 e2) -> («ほめるsr» e1 e2) := by
   intros e1 e2 _h
   exact «ほめるsr».mk e1 e2

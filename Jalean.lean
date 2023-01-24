@@ -56,6 +56,11 @@ example : ∀ e1 e2:Entity, «ほめるsr2» e1 e2 := by
   intros e1 e2
   exact «ほめるsr2».hmr e1 e2
 
+theorem aa : ∀ (p1 p2 : Prop) {_ : p1} {_ : p2}, And p1 p2 := by
+  intros p1 p2 hp1 hp2
+  exact And.intro hp1 hp2
+
+#print aa
 structure «ほめるsr3» where
   ga : Entity
   wo : Entity

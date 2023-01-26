@@ -24,6 +24,7 @@ def say (a : String) := a.capitalize
 inductive Entity where
   | entity (n : Name) : Entity
 open Entity
+#print entity
 def taro := entity `a
 def jiro := entity `b
 #check False
@@ -35,39 +36,19 @@ def «次郎を» := 2
 #check Eq
 #check λy x => And.intro x y
 -- i==2 -> S\NP\NP:       \y.\x.\c.(e:event)X(op(e,x,y)X(ce)
-#check Entity
-#check Nat
-inductive «ほめるsr» (e1 e2 : Entity) : Prop
-  | mk : Entity -> Entity -> «ほめるsr» e1 e2
+structure «ほめるsr» (ga wo : Entity) where
+  ga : Entity
+  wo : Entity
+
+#check Fin 1
+#check «ほめるsr» (entity `a) (entity `b)
 #check «ほめるsr».mk (entity `a) (entity `b)
-inductive «ほめるsr2» : Entity -> Entity -> Prop
-  | hmr (e1 : Entity) (e2 : Entity) : «ほめるsr2» e1 e2
-#check «ほめるsr2».hmr (entity `a) (entity `b)
-def haha := «ほめるsr2» (entity `a) (entity `b)
-example : ∀ e1 e2:Entity, («ほめるsr2» e1 e2) -> («ほめるsr» e1 e2) := by
-  intros e1 e2 _h
-  exact «ほめるsr».mk e1 e2
-
-example : ∀ e1 e2:Entity, «ほめるsr» e1 e2 := by
-  intros e1 e2
-  exact «ほめるsr».mk e1 e2
-
-example : ∀ e1 e2:Entity, «ほめるsr2» e1 e2 := by
-  intros e1 e2
-  exact «ほめるsr2».hmr e1 e2
 
 theorem aa : ∀ (p1 p2 : Prop) {_ : p1} {_ : p2}, And p1 p2 := by
   intros p1 p2 hp1 hp2
   exact And.intro hp1 hp2
 
 #print aa
-structure «ほめるsr3» where
-  ga : Entity
-  wo : Entity
-#check «ほめるsr3»
-structure verb2 where
-  ga : Entity
-  wo : Entity
 
 def «ほめる» := 3
 

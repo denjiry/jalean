@@ -24,35 +24,26 @@ def say (a : String) := a.capitalize
 inductive Entity where
   | entity (n : Name) : Entity
 open Entity
-#print entity
+
 def taro := entity `a
 def jiro := entity `b
-#check False
 example : taro ≠ jiro := by 
   admit
 
-def «太郎が» := 1
-def «次郎を» := 2
-#check Eq
-#check λy x => And.intro x y
+def «太郎が» :Entity := entity `«太郎が»
+def «次郎を» :Entity := entity `«次郎を»
+
 -- i==2 -> S\NP\NP:       \y.\x.\c.(e:event)X(op(e,x,y)X(ce)
-structure «ほめるsr» (ga wo : Entity) where
-  ga : Entity
-  wo : Entity
-
-#check Fin 1
+inductive «ほめるsr» (ga wo : Entity) : Prop where
+  | rel : Entity -> Entity -> «ほめるsr» ga wo
 #check «ほめるsr» (entity `a) (entity `b)
-#check «ほめるsr».mk (entity `a) (entity `b)
 
-theorem aa : ∀ (p1 p2 : Prop) {_ : p1} {_ : p2}, And p1 p2 := by
-  intros p1 p2 hp1 hp2
-  exact And.intro hp1 hp2
+def «ほめる» (ga wo : Entity):= «ほめるsr» ga wo
 
-#print aa
+#check «ほめる» «太郎が» «次郎を» 
+def A := «ほめる» «太郎が» «次郎を» 
+def B := «ほめる» «次郎を» «太郎が»
 
-def «ほめる» := 3
-
-#check «太郎が» «次郎を» «ほめる»
 
 def getCtors (typ : Name) : MetaM (List Name) := do
   let env ← getEnv

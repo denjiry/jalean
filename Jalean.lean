@@ -75,10 +75,7 @@ def myanonImpl : TermElab := fun stx typ? => do
 declare_syntax_cat ja_expr
 syntax "こんにちは" : ja_expr
 syntax "言う" : ja_expr
--- def こんにちは := "hello"
--- def 言う (a : String) := a.capitalize
--- @[termElab ja_expr]
--- def 
+syntax term+ : ja_expr
 
 elab "ja(" je:ja_expr+ ")" : term => do
   let _a: Syntax := (je[0]!).raw
@@ -87,3 +84,4 @@ elab "ja(" je:ja_expr+ ")" : term => do
 
 #eval ja(こんにちは)
 #eval ja(こんにちは言う)
+#eval ja(«ほめる»«太郎が»«次郎を»)

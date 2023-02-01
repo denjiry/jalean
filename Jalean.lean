@@ -71,14 +71,16 @@ def myanonImpl : TermElab := fun stx typ? => do
 
 -- #check (⟨⟨1 sorry⟩⟩ : Fin 12)
 -- def oo: List Char := ⟨⟨ hello ⟩⟩
-
+declare_syntax_cat hoge
+syntax term : hoge
 declare_syntax_cat ja_expr
 syntax "こんにちは" : ja_expr
 syntax "言う" : ja_expr
--- おそらくterm+を使っている場合、空白が存在するだけでTerm.appのパーサーが当たってしまうようである
+-- おそらく{任意の文法}+を使っている場合、空白が存在するだけでTerm.appのパーサーが当たってしまうようである
 -- 空白は視認性が悪く、空白が存在するかどうかで振る舞い変わるのは望ましくないので
 -- Term.app のパーサーが当たらないように回避する必要がある
-syntax term+ : ja_expr
+-- 調査の結果{任意の文法}+で当たってしまうようなので、泥臭くTerm.appかどうかで場合分けしたほうがいいかも
+syntax hoge+ : ja_expr
 
 elab "ja(" je:ja_expr+ ")" : term => do
   let _a: Syntax := (je[0]!).raw
@@ -87,4 +89,4 @@ elab "ja(" je:ja_expr+ ")" : term => do
 
 #eval ja(こんにちは)
 #eval ja(こんにちは言う)
-#eval ja(«ほめる»«太郎が»«次郎を»)
+#eval ja(«ほめる» «太郎が» «次郎を»)

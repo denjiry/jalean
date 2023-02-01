@@ -75,6 +75,9 @@ def myanonImpl : TermElab := fun stx typ? => do
 declare_syntax_cat ja_expr
 syntax "こんにちは" : ja_expr
 syntax "言う" : ja_expr
+-- おそらくterm+を使っている場合、空白が存在するだけでTerm.appのパーサーが当たってしまうようである
+-- 空白は視認性が悪く、空白が存在するかどうかで振る舞い変わるのは望ましくないので
+-- Term.app のパーサーが当たらないように回避する必要がある
 syntax term+ : ja_expr
 
 elab "ja(" je:ja_expr+ ")" : term => do

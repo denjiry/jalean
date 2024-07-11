@@ -9,7 +9,7 @@ lean_lib Jalean {
   -- add library configuration options here
 }
 
-@[defaultTarget]
+@[default_target]
 lean_exe jalean {
   root := `Main
 }

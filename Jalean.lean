@@ -54,7 +54,7 @@ def getCtors (typ : Name) : MetaM (List Name) := do
 
 syntax (name := myanon) "⟨⟨" term+ "⟩⟩" : term
 
-@[termElab myanon]
+@[term_elab myanon]
 def myanonImpl : TermElab := fun stx typ? => do
   -- tryPostponeIfNoneOrMVar typ? 
   let some typ := typ? | throwError "expected type must be known"
